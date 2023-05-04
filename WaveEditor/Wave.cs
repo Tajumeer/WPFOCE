@@ -21,6 +21,7 @@ namespace WaveEditor
         public int HealthPoints;
     }
 
+
     [Serializable]
     public class WaveList
     {

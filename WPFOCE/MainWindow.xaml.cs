@@ -13,24 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPFOCE
+namespace WPFOCE.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml0
     /// </summary>
     public partial class MainWindow : Window
     {
-        public string TextBoxContent { get; set; }
         public MainWindow()
         {
-            TextBoxContent = "Content";
             InitializeComponent();
-        }
-
-        private void MyClick(object sender, RoutedEventArgs e)
-        {
-            ViewTextbox2.Text = TextBoxContent;
-        
         }
     }
 }

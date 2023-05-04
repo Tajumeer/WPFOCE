@@ -11,4 +11,9 @@
     <ProjectReference Include="..\WaveEditor\WaveEditor.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>
