@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-//using UnityEngine;
+using UnityEngine;
 
 namespace WaveEditor
 {
     [Serializable]
     public class Wave
-    { 
+    {
         private float timer;
 
         private List<Enemy> enemyTypes = new List<Enemy>();
 
-        //private Vector2 spawnpoint;
+        private Vector2 spawnpoint;
     }
 
     [Serializable]

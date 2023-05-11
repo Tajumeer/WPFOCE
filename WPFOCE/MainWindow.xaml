@@ -16,11 +16,25 @@
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
 
         </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="_Datei">
+                <MenuItem Header="_Neue Wave" Command="{Binding CreateNewWave}" InputGestureText="Strg+N" ToolTip="Klicke hier, um eine neue Welle zu erstellen!!"/>
+                <Separator/>
+                <MenuItem Header="Wave _laden..."/>
+                <MenuItem Header="Wave _speichern"/>
+                <MenuItem Header="Wave speichern _als..."/>
+                <Separator/>
+                <MenuItem Header="_Beenden">
+                </MenuItem>
+            </MenuItem>
+
+        </Menu>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -36,23 +50,12 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0" TextAlignment="Center" Margin="25">
-                     Index
-                </TextBlock>
-
-                <TextBlock Grid.Row="0" TextAlignment="Right" Margin="25 25 75 25">
-                           1
-                </TextBlock>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-
-                    <ListView Grid.Column="0">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
+                    <TextBlock Margin="25">Index:</TextBlock>
+                    <TextBlock Margin="25">0</TextBlock>
+                </StackPanel>
+                <StackPanel Width="Auto" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                    <ListView HorizontalContentAlignment="Left">
                         <ListViewItem>
                             Test
                         </ListViewItem>
@@ -61,76 +64,53 @@
                         </ListViewItem>
                     </ListView>
 
-                    <StackPanel Grid.Column="1" Orientation="Vertical" >
+                    <StackPanel Orientation="Vertical">
 
-                        <Button Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-
+                        <Button Grid.Row="0" Margin="10 10 10 10" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                             <Button.Content>
                                 Add
                             </Button.Content>
                         </Button>
-                        <Button Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment = "Center">
+                        <Button Grid.Row="1" Margin="10 10 10 10" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment = "Center">
                             <Button.Content>
                                 Remove
                             </Button.Content>
                         </Button>
 
                     </StackPanel>
-
-                    <ListView Grid.Column="2">
-                        <ListViewItem>
-                            Test
-                        </ListViewItem>
-                        <ListViewItem>
-                            Test 2
-                        </ListViewItem>
+                    <ListView HorizontalContentAlignment="Right">
+                        <ListViewItem Content="Test"/>
+                        <ListViewItem Content="Test 2"/>
                     </ListView>
-                </Grid>
-                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <StackPanel Orientation="Vertical">
-                        <Label
-                            Content="X"
-                            />
+                </StackPanel>
+                <StackPanel Grid.Row="2" VerticalAlignment="Center"  Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <Label Content="X"/>
 
-                        <TextBox
-                            
-                            />
+                        <TextBox/>
                     </StackPanel>
 
-                    <StackPanel Orientation="Vertical">
-                        <Label
-                            Content="Y"
-                            />
-
-                        <TextBox
-                            
-                            />
+                    <StackPanel Margin="10" Orientation="Vertical">
+                        <Label Content="Y" />
+                        <TextBox/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Center" >
-                    <Label
-                            Content="Timer"
-                            />
-
-                    <TextBox
-                            
-                            />
+                <StackPanel VerticalAlignment="Center" Grid.Row="3" Orientation="Vertical" HorizontalAlignment="Center" >
+                    <Label Content="Timer"/>
+                    <TextBox/>
                 </StackPanel>
-                <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button 
-                    
-                    />
-                    <Button
-                    
-                    />
+                <StackPanel Grid.Row="4" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Margin="10" Height="25"  Width="50" VerticalAlignment="Center" Content="New"/>
+                    <Button Margin="10" Height="25"  Width="50" VerticalAlignment="Center" Content="Delete"/>
                 </StackPanel>
             </Grid>
-            <Button Grid.Column="0"
-                />
-            <Button Grid.Column="2"
-                />
-
+            <Button VerticalAlignment="Center" Grid.Column="0" Content="Left"/>
+            <Button VerticalAlignment="Center" Grid.Column="2" Content="Right"/>
         </Grid>
+
+        <StatusBar Grid.Row="2">
+            <Label Content="{Binding StatusLabel}" FontSize="5" Margin="0" Padding="0"/>
+        </StatusBar>
 
     </Grid>
 </Window>
