@@ -10,7 +10,11 @@ namespace WPFOCE
 {
     class DelegateCommand : ICommand
     {
-        public event EventHandler? CanExecuteChanged;
+        public event EventHandler? CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         Action<object?> m_execute;
         Func<object?, bool> m_canExecute;
@@ -30,5 +34,6 @@ namespace WPFOCE
         {
             m_execute(parameter);
         }
+
     }
 }

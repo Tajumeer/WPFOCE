@@ -142,7 +142,7 @@ namespace WPFOCE.ViewModels
 
         private void DoClickRight(object? param)
         {
-            ShowCurrentWave(Index++);
+            ShowCurrentWave(Index);
         }
 
         private bool CanClickRight(object? param)
@@ -157,7 +157,7 @@ namespace WPFOCE.ViewModels
 
         private void DoClickLeft(object? param)
         {
-            ShowCurrentWave(Index--);
+            ShowCurrentWave(Index - 2);
         }
 
         private bool CanClickLeft(object? param)
@@ -199,7 +199,7 @@ namespace WPFOCE.ViewModels
         private void ShowCurrentWave(int _index)
         {
             Index = _index + 1;
-            CommandManager.InvalidateRequerySuggested(); //!?!
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
