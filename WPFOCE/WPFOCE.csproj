@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="BusinessLogic\" />
     <Folder Include="Views\" />
   </ItemGroup>
 
