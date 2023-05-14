@@ -24,10 +24,10 @@
 
         <Menu Grid.Row="0">
             <MenuItem Header="_Datei">
-                <MenuItem Header="_Neue Wave" Command="{Binding CreateNewWave}" InputGestureText="Strg+N" ToolTip="Klicke hier, um eine neue Welle zu erstellen!!"/>
+                <MenuItem Header="_Neue Wave List" Command="{Binding CreateNewWaveList}" InputGestureText="Strg+N" ToolTip="Klicke hier, um eine neue Welle zu erstellen!!"/>
                 <Separator/>
-                <MenuItem Header="Wave _laden..."/>
-                <MenuItem Header="Wave _speichern"/>
+                <MenuItem Header="Wave _laden..." Command="{Binding Load}"/>
+                <MenuItem Header="Wave _speichern" Command="{Binding Save}"/>
                 <MenuItem Header="Wave speichern _als..."/>
                 <Separator/>
                 <MenuItem Header="_Beenden">
@@ -52,7 +52,9 @@
                 </Grid.RowDefinitions>
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
                     <TextBlock Margin="25">Index:</TextBlock>
-                    <TextBlock Margin="25">0</TextBlock>
+                    <TextBlock Margin="25">
+                        <TextBlock Text="{Binding Index}"/>
+                    </TextBlock>
                 </StackPanel>
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
                     <ListView HorizontalContentAlignment="Left">
@@ -99,12 +101,12 @@
                     <TextBox/>
                 </StackPanel>
                 <StackPanel Grid.Row="4" VerticalAlignment="Center" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Margin="10" Height="25"  Width="50" VerticalAlignment="Center" Content="New"/>
+                    <Button Margin="10" Height="25"  Width="50" VerticalAlignment="Center" Content="New" Command="{Binding CreateNewWave}"/>
                     <Button Margin="10" Height="25"  Width="50" VerticalAlignment="Center" Content="Delete"/>
                 </StackPanel>
             </Grid>
-            <Button VerticalAlignment="Center" Grid.Column="0" Content="Left"/>
-            <Button VerticalAlignment="Center" Grid.Column="2" Content="Right"/>
+            <Button VerticalAlignment="Center" Grid.Column="0" Content="Left" Command="{Binding ClickLeft}"/>
+            <Button VerticalAlignment="Center" Grid.Column="2" Content="Right" Command="{Binding ClickRight}"/>
         </Grid>
 
         <StatusBar Grid.Row="2">

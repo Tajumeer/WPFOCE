@@ -11,7 +11,7 @@ namespace WaveEditor
 
         private List<Enemy> enemyTypes = new List<Enemy>();
 
-        private Vector2 spawnpoint;
+        //private Vector2 spawnpoint;
     }
 
     [Serializable]

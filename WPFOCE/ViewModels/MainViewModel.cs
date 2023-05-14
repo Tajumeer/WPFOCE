@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using WPFOCE.BusinessLogic;
 using System.Reflection.Emit;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using WPFOCE.Model;
+using WaveEditor;
+using System.Windows.Input;
+using System.Windows;
+using Microsoft.VisualBasic;
+using Microsoft.Win32;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
+//TODO: Model erstellen, Laden/Speichern, mEhR dElEgAtE cOmMaNdS!!11 (auch PropertyChanghed gedöns)
 
 namespace WPFOCE.ViewModels
 {
@@ -16,7 +24,15 @@ namespace WPFOCE.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private string m_path;
+
+        public DelegateCommand CreateNewWaveList { get; }
         public DelegateCommand CreateNewWave { get; }
+        public DelegateCommand ClickLeft { get; }
+        public DelegateCommand ClickRight { get; }
+        public DelegateCommand Save { get; }
+        public DelegateCommand Load { get; }
+
         public string StatusLabel
         {
             get => m_statusLabel;
@@ -30,36 +46,160 @@ namespace WPFOCE.ViewModels
             }
         }
 
-        public SolidColorBrush StatusBarColor
+        public int Index
         {
-            get => m_statusBarColor;
+            get => m_index;
             set
             {
-                if (m_statusBarColor != value)
+                if(m_index != value)
                 {
-                    m_statusBarColor = value;
-                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusBarColor)));
+                    m_index = value;
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Index)));
                 }
             }
         }
 
+        private int m_index;
+        private ModelClass m_model = new ModelClass();
         private string m_statusLabel;
-        private SolidColorBrush m_statusBarColor;
-
 
         public MainViewModel()
         {
-            CreateNewWave = new DelegateCommand(CreateNew, CanCreateNew);
+            CreateNewWaveList = new DelegateCommand(CreateNew, CanCreateNew);
+            CreateNewWave = new DelegateCommand(DoCreateNewWave, CanCreateNewWave);
+            ClickLeft = new DelegateCommand(DoClickLeft, CanClickLeft);
+            ClickRight = new DelegateCommand(DoClickRight, CanClickRight);
+            Save = new DelegateCommand(DoSave, CanSave);
+            Load = new DelegateCommand(DoLoad, CanLoad);
+            ShowCurrentWave(m_model.WaveList.Count - 1);
+        }
+
+        private void DoSave(object? param)
+        {
+            if (m_path == null)
+            {
+                SaveAsData();
+                return;
+            }
+
+            SaveFS();
+        }
+
+        private bool CanSave(object? param)
+        {
+            return true;
+        }
+        private void SaveAsData()
+        {
+            SaveFileDialog m_dialog = new SaveFileDialog();
+            m_dialog.Filter = "Level|*.lvl";
+
+            if (m_dialog.ShowDialog() == true)
+            {
+                m_path = m_dialog.FileName;
+                SaveFS();
+            }
+        }
+        private void DoLoad(object? param)
+        {
+            OpenFileDialog m_dialog = new OpenFileDialog();
+            m_dialog.Filter = "Level|*.lvl";
+
+            if (m_dialog.ShowDialog() == true)
+            {
+                m_path = m_dialog.FileName;
+                LoadFS();
+            }
+        }
+
+        private bool CanLoad(object? param)
+        {
+            return true;
+        }
+        private void SaveFS()
+        {
+            using (FileStream fs = new FileStream(m_path, FileMode.Create))
+            {
+                BinaryFormatter bin = new BinaryFormatter();
+                bin.Serialize(fs, m_model.m_waveList);
+            }
+
+            StatusLabel = "Waves gespeichert!";
+        }
+
+        private void LoadFS()
+        {
+            using (FileStream fs = new FileStream(m_path, FileMode.Open))
+            {
+                BinaryFormatter bin = new BinaryFormatter();
+                m_model.m_waveList = (WaveList)bin.Deserialize(fs);
+            }
+
+            ShowCurrentWave(m_model.WaveList.Count);
+            StatusLabel = "Waves geladen!";
+        }
+
+
+        private void DoClickRight(object? param)
+        {
+            ShowCurrentWave(Index++);
+        }
+
+        private bool CanClickRight(object? param)
+        {
+            if (m_model is null)
+                return false;
+
+            if (Index == m_model.WaveList.Count)
+                return false;
+            return true;
+        }
+
+        private void DoClickLeft(object? param)
+        {
+            ShowCurrentWave(Index--);
+        }
+
+        private bool CanClickLeft(object? param)
+        {
+            if (m_model is null)
+                return false;
+
+            if (Index <= 1)
+                return false;
+            return true;
         }
 
         private void CreateNew(object? param)
         {
-            StatusLabel = "Neu erstellt!";
+            m_model.WaveList = new List<Wave>();
+            StatusLabel = "Neue Liste erstellt!";
+            ShowCurrentWave(m_model.WaveList.Count - 1);
         }
 
         private bool CanCreateNew(object? param)
         {
             return true;
+        }
+
+        private void DoCreateNewWave(object? param)
+        {
+            m_model.WaveList.Add(new Wave());
+            StatusLabel = "Neue Welle erstellt!";
+            ShowCurrentWave(m_model.WaveList.Count - 1);
+        }
+
+        private bool CanCreateNewWave(object? param)
+        {
+            if (m_model.WaveList is not null)
+                return true;
+            return false;
+        }
+
+        private void ShowCurrentWave(int _index)
+        {
+            Index = _index + 1;
+            CommandManager.InvalidateRequerySuggested(); //!?!
         }
     }
 }
