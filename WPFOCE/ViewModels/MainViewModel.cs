@@ -91,23 +91,23 @@ namespace WPFOCE.ViewModels
         }
         private void SaveAsData()
         {
-            SaveFileDialog m_dialog = new SaveFileDialog();
-            m_dialog.Filter = "Level|*.lvl";
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "Waves|*.wav";
 
-            if (m_dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
-                m_path = m_dialog.FileName;
+                m_path = dialog.FileName;
                 SaveFS();
             }
         }
         private void DoLoad(object? param)
         {
-            OpenFileDialog m_dialog = new OpenFileDialog();
-            m_dialog.Filter = "Level|*.lvl";
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Waves|*.wav";
 
-            if (m_dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
-                m_path = m_dialog.FileName;
+                m_path = dialog.FileName;
                 LoadFS();
             }
         }
